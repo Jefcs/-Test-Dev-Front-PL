@@ -1,0 +1,41 @@
+/* Main configuration */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+html {
+  box-sizing: border-box;
+  font-size: 62.5%;
+}
+
+body {
+  font-family: serif;
+  font-weight: 300;
+}
+
+/* Variables */
+:root {
+  --primary-color: #244677;
+  --primary-color-light: #12295b;
+  --secondary-color: #f1f3f5;
+  --light-dark: #495057;
+  --dark-white: #f7f8fc;
+  --light-white: #ffffff;
+
+  --font-monteserrat: Montserrat;
+  --font-poppins: Poppins;
+}
+
+/* Button */
+
+
+/* Accessibility tag */
+fieldset {
+  margin: 0;
+  border: 0;
+  padding: 0;
+}
