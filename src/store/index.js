@@ -8,6 +8,7 @@ export default createStore({
     errorPassword: [],
     user: null,
     clients: {},
+    regiterClients: null,
   },
   mutations: {
     EMAIL_MESSAGE(state, message) {
@@ -24,6 +25,9 @@ export default createStore({
     GET_CLIENTS(state, data) {
       state.clients = data
     },
+    REGISTER_CLIENTS(state, clients) {
+      state.regiterClients = clients
+    },
   },
   actions: {
     async login({ commit }, credentials) {
@@ -36,6 +40,16 @@ export default createStore({
     listagem({ commit }) {
       Services.getEvent().then(data => {
         commit('GET_CLIENTS', data.data[0])
+      })
+    },
+    cadastrar({ commit }, credentials) {
+      Services.postClients(
+        credentials.name,
+        credentials.email,
+        credentials.mobile
+      ).then(({ data }) => {
+        console.log(data)
+        commit('REGISTER_CLIENTS', data)
       })
     },
   },

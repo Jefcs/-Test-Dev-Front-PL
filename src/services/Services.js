@@ -10,4 +10,11 @@ export default {
   getEvent() {
     return apiClient.get('/clientes')
   },
+  postClients(name, email, mobile) {
+    return apiClient.post('/clientes', {
+      name,
+      email,
+      mobile,
+    })
+  },
 }

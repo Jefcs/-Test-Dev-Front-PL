@@ -31,7 +31,7 @@
             <div class="right">
               <BaseInput
                 id="fone"
-                v-model="event.phone"
+                v-model="event.mobile"
                 label="Celular"
                 placeholder="Digite o celular"
                 type="text"
@@ -61,14 +61,17 @@ export default {
       event: {
         name: '',
         email: '',
-        phone: '',
+        mobile: '',
       },
     }
   },
   methods: {
     sendForm() {
-      this.event
-      console.log('Form sent', this.event)
+      this.$store.dispatch('cadastrar', {
+        name: this.event.name,
+        email: this.event.email,
+        mobile: this.event.mobile,
+      })
     },
   },
 }
