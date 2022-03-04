@@ -49,8 +49,8 @@ export default {
   data() {
     return {
       event: {
-        email: null,
-        password: null,
+        email: 'devfrontpl@diwe.com.br',
+        password: 'frontPl@2021',
         emailMessage: 'Preencha o campo Email',
         passwordMessage: 'Preencha o campo Senha',
       },
@@ -80,7 +80,7 @@ export default {
           user: this.event.email,
           pwd: this.event.password,
         })
-        .then(this.$router.push({ name: 'listagem' }))
+        .then(() => this.$router.push({ name: 'listagem' }))
     },
   },
 }

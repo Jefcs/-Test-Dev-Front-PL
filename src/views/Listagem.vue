@@ -22,11 +22,11 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>01</td>
-              <td>Jefferson de Carvalho</td>
-              <td>11981384403</td>
-              <td>jeffersonc.silva@hotmail.com</td>
+            <tr v-for="client in clients" v-bind:key="client.id">
+              <td>{{ client.id }}</td>
+              <td>{{ client.name }}</td>
+              <td>{{ client.mobile }}</td>
+              <td>{{ client.email }}</td>
               <td>
                 <div>
                   <div class="pointer">
@@ -82,20 +82,6 @@
                 </div>
               </td>
             </tr>
-            <tr>
-              <td>01</td>
-              <td>Jeff</td>
-              <td>11981384403</td>
-              <td>jeffersonc.silva@hotmail.com</td>
-              <td>0</td>
-            </tr>
-            <tr>
-              <td>01</td>
-              <td>Jeff</td>
-              <td>11981384403</td>
-              <td>jeffersonc.silva@hotmail.com</td>
-              <td>0</td>
-            </tr>
           </tbody>
         </table>
       </div>
@@ -111,6 +97,11 @@ export default {
 
   created() {
     this.$store.dispatch('listagem')
+  },
+  computed: {
+    clients() {
+      return this.$store.state.clients
+    },
   },
 }
 </script>
