@@ -46,11 +46,14 @@ export default {
   name: 'Home',
   components: { BaseInput, BaseButton },
 
+  // Credentials
+  // devfrontpl@diwe.com.br and frontPl@2021
+
   data() {
     return {
       event: {
-        email: 'devfrontpl@diwe.com.br',
-        password: 'frontPl@2021',
+        email: null,
+        password: null,
         emailMessage: 'Preencha o campo Email',
         passwordMessage: 'Preencha o campo Senha',
       },
@@ -74,13 +77,14 @@ export default {
     sendForm() {
       const formIsValid = !this.validName && !this.validPassword
 
-      if (formIsValid) console.log('success')
-      this.$store
-        .dispatch('login', {
-          user: this.event.email,
-          pwd: this.event.password,
-        })
-        .then(() => this.$router.push({ name: 'listagem' }))
+      if (formIsValid) {
+        this.$store
+          .dispatch('login', {
+            user: this.event.email,
+            pwd: this.event.password,
+          })
+          .then(() => this.$router.push({ name: 'listagem' }))
+      }
     },
   },
 }

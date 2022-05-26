@@ -4,12 +4,12 @@
     <div class="cadastro">
       <form @submit.prevent="sendForm">
         <fieldset class="form">
-          <legend>Cadastre um novo contato</legend>
-          <p>Preencha as informações para cadastrar um novo contato</p>
+          <legend>Atualizar contato</legend>
+          <p>Faça as alterações necessárias e ao terminar salve seu contato</p>
 
           <BaseInput
             id="name"
-            v-model="event.name"
+            v-model="user.name"
             label="Nome Completo"
             placeholder="Digite o nome do contato"
             type="text"
@@ -21,7 +21,7 @@
             <div class="left">
               <BaseInput
                 id="email"
-                v-model="event.email"
+                v-model="user.email"
                 label="Email"
                 placeholder="Digite seu email"
                 type="text"
@@ -31,7 +31,7 @@
             <div class="right">
               <BaseInput
                 id="fone"
-                v-model="event.mobile"
+                v-model="user.mobile"
                 label="Celular"
                 placeholder="Digite o celular"
                 type="text"
@@ -41,7 +41,7 @@
 
           <span class="input_password"></span>
 
-          <BaseButton type="submit">Cadastrar contato</BaseButton>
+          <BaseButton type="submit">Salvar alterações</BaseButton>
         </fieldset>
       </form>
     </div>
@@ -53,25 +53,32 @@ import Navbar from '@/components/Navbar.vue'
 import BaseInput from '@/components/BaseInput.vue'
 import BaseButton from '@/components/BaseButton.vue'
 export default {
-  name: 'Cadastro',
+  name: 'Atualizar',
   components: { Navbar, BaseInput, BaseButton },
 
   data() {
     return {
-      event: {
+      user: {
         name: null,
         email: null,
         mobile: null,
+        id: null,
       },
     }
   },
+
+  created() {
+    this.user = this.$store.state.userInfo
+  },
+
   methods: {
     sendForm() {
       this.$store
-        .dispatch('cadastrar', {
-          name: this.event.name,
-          email: this.event.email,
-          mobile: this.event.mobile,
+        .dispatch('atualizarUser', {
+          name: this.user.name,
+          email: this.user.email,
+          mobile: this.user.mobile,
+          id: this.user.id,
         })
         .then(() => this.$router.push({ name: 'listagem' }))
     },

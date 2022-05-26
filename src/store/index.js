@@ -7,8 +7,11 @@ export default createStore({
     errorEmail: [],
     errorPassword: [],
     user: null,
-    clients: {},
     regiterClients: null,
+    editUser: {},
+    clientId: null,
+    userInfo: {},
+    updateUser: {},
   },
   mutations: {
     EMAIL_MESSAGE(state, message) {
@@ -28,6 +31,15 @@ export default createStore({
     REGISTER_CLIENTS(state, clients) {
       state.regiterClients = clients
     },
+    DELETE_CLIENT(state, id) {
+      state.clientId = id
+    },
+    UPDATE_USER(state, updateUser) {
+      state.updateUser = updateUser
+    },
+    SET_EDIT_USER_INFO(state, user) {
+      state.userInfo = user
+    },
   },
   actions: {
     async login({ commit }, credentials) {
@@ -37,20 +49,36 @@ export default createStore({
         }
       )
     },
+
     listagem({ commit }) {
       Services.getEvent().then(data => {
         commit('GET_CLIENTS', data.data[0])
       })
     },
-    cadastrar({ commit }, credentials) {
-      Services.postClients(
-        credentials.name,
-        credentials.email,
-        credentials.mobile
-      ).then(({ data }) => {
-        console.log(data)
+
+    async cadastrar({ commit }, { name, email, mobile }) {
+      await Services.postClients(name, email, mobile).then(({ data }) => {
         commit('REGISTER_CLIENTS', data)
       })
+    },
+
+    deletarId({ commit }, userId) {
+      Services.deleteEvent(userId).then(() => {
+        commit('DELETE_CLIENT', userId)
+        Services.getEvent().then(data => {
+          commit('GET_CLIENTS', data.data[0])
+        })
+      })
+    },
+
+    atualizarUser({ commit }, { name, email, mobile, id }) {
+      Services.putClients(name, email, mobile, id).then(({ data }) => {
+        commit('UPDATE_USER', data)
+      })
+    },
+
+    editUser({ commit }, userInfo) {
+      commit('SET_EDIT_USER_INFO', userInfo)
     },
   },
   modules: {},

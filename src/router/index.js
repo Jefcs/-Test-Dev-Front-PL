@@ -19,6 +19,12 @@ const routes = [
     component: () =>
       import(/* webpackChunkName: "listagem */ '../views/Listagem.vue'),
   },
+  {
+    path: '/atualizar',
+    name: 'atualizar',
+    component: () =>
+      import(/* webpackChunkName: "atualizar */ '../views/Atualizar.vue'),
+  },
 ]
 
 const router = createRouter({

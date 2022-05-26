@@ -1,5 +1,6 @@
 <template>
   <Navbar />
+  <Modal />
   <div class="container">
     <div class="main-content">
       <div class="listagem">Listagem de contatos</div>
@@ -29,54 +30,16 @@
               <td>{{ client.email }}</td>
               <td>
                 <div>
-                  <div class="pointer">
-                    <svg
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M11 3H4C3.46957 3 2.96086 3.21071 2.58579 3.58579C2.21071 3.96086 2 4.46957 2 5V19C2 19.5304 2.21071 20.0391 2.58579 20.4142C2.96086 20.7893 3.46957 21 4 21H18C18.5304 21 19.0391 20.7893 19.4142 20.4142C19.7893 20.0391 20 19.5304 20 19V12"
-                        stroke="#5C7CFA"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                      />
-                      <path
-                        d="M18.5 1.62132C18.8978 1.2235 19.4374 1 20 1C20.5626 1 21.1022 1.2235 21.5 1.62132C21.8978 2.01915 22.1213 2.55871 22.1213 3.12132C22.1213 3.68393 21.8978 4.2235 21.5 4.62132L12 14.1213L8 15.1213L9 11.1213L18.5 1.62132Z"
-                        stroke="#5C7CFA"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                      />
-                    </svg>
+                  <router-link
+                    class="pointer link"
+                    @click="this.editUserInfo(client)"
+                    :to="{ name: 'atualizar' }"
+                  >
+                    <img src="@/assets/edit.svg" />
                     <h4 class="editar">Editar</h4>
-                  </div>
-                  <div class="pointer">
-                    <svg
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M3 6H5H21"
-                        stroke="#DB3030"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                      />
-                      <path
-                        d="M8 6V4C8 3.46957 8.21071 2.96086 8.58579 2.58579C8.96086 2.21071 9.46957 2 10 2H14C14.5304 2 15.0391 2.21071 15.4142 2.58579C15.7893 2.96086 16 3.46957 16 4V6M19 6V20C19 20.5304 18.7893 21.0391 18.4142 21.4142C18.0391 21.7893 17.5304 22 17 22H7C6.46957 22 5.96086 21.7893 5.58579 21.4142C5.21071 21.0391 5 20.5304 5 20V6H19Z"
-                        stroke="#DB3030"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                      />
-                    </svg>
+                  </router-link>
+                  <div class="pointer" @click="openModal(client.id)">
+                    <img src="@/assets/trash.svg" />
                     <h4 class="lixeira">Excluir</h4>
                   </div>
                 </div>
@@ -91,16 +54,35 @@
 
 <script>
 import Navbar from '../components/Navbar.vue'
+import Modal from '../components/Modal.vue'
 export default {
   name: 'Listagem',
-  components: { Navbar },
+  components: { Navbar, Modal },
+
+  data() {
+    return {
+      showModal: false,
+    }
+  },
 
   created() {
     this.$store.dispatch('listagem')
   },
+
   computed: {
     clients() {
       return this.$store.state.clients
+    },
+  },
+
+  methods: {
+    editUserInfo(userInfo) {
+      this.$store.dispatch('editUser', userInfo)
+    },
+
+    openModal(id) {
+      this.emitter.emit('open-modal', !this.showModal)
+      this.emitter.emit('delete-user', id)
     },
   },
 }
@@ -159,6 +141,7 @@ export default {
       grid-column: 1 / 3;
       background-color: white;
       margin-top: 2rem;
+      overflow: auto;
     }
 
     .table {
@@ -199,10 +182,17 @@ export default {
       .editar {
         padding-left: 0.5rem;
         padding-right: 2rem;
+        color: var(--light-dark);
       }
 
       .lixeira {
         padding-left: 0.5rem;
+      }
+
+      .link {
+        display: flex;
+        align-items: center;
+        text-decoration: none;
       }
 
       .pointer {
