@@ -15,15 +15,40 @@
         <table class="table">
           <thead>
             <tr>
-              <th>#</th>
-              <th>Nome</th>
-              <th>Celular</th>
-              <th>Email</th>
+              <th>
+                <img src="@/assets/hash.svg" />
+                <img
+                  src="@/assets/triangle-down.svg"
+                  class="triangle"
+                  @click="sort('id')"
+                />
+              </th>
+              <th>
+                Nome<img
+                  src="@/assets/triangle-down.svg"
+                  class="triangle"
+                  @click="sort('name')"
+                />
+              </th>
+              <th>
+                Celular<img
+                  src="@/assets/triangle-down.svg"
+                  class="triangle"
+                  @click="sort('mobile')"
+                />
+              </th>
+              <th>
+                Email<img
+                  src="@/assets/triangle-down.svg"
+                  class="triangle"
+                  @click="sort('email')"
+                />
+              </th>
               <th>Ações</th>
             </tr>
           </thead>
           <tbody>
-            <tr v-for="client in clients" v-bind:key="client.id">
+            <tr v-for="client in sorted" v-bind:key="client.id">
               <td>{{ client.id }}</td>
               <td>{{ client.name }}</td>
               <td>{{ client.mobile }}</td>
@@ -53,15 +78,18 @@
 </template>
 
 <script>
-import Navbar from '../components/Navbar.vue'
-import Modal from '../components/Modal.vue'
+import Navbar from '@/components/Navbar.vue'
+import Modal from '@/components/Modal.vue'
 export default {
   name: 'Listagem',
   components: { Navbar, Modal },
 
   data() {
     return {
+      clients: [],
       showModal: false,
+      currentSort: 'id',
+      currentSortDir: 'asc',
     }
   },
 
@@ -69,9 +97,26 @@ export default {
     this.$store.dispatch('listagem')
   },
 
+  watch: {
+    client() {
+      this.clients = this.$store.state.clients
+    },
+  },
+
   computed: {
-    clients() {
+    client() {
       return this.$store.state.clients
+    },
+
+    sorted() {
+      // eslint-disable-next-line vue/no-side-effects-in-computed-properties
+      return this.clients.sort((a, b) => {
+        let modifier = 1
+        if (this.currentSortDir === 'desc') modifier = -1
+        if (a[this.currentSort] < b[this.currentSort]) return -1 * modifier
+        if (a[this.currentSort] > b[this.currentSort]) return 1 * modifier
+        return 0
+      })
     },
   },
 
@@ -83,6 +128,14 @@ export default {
     openModal(id) {
       this.emitter.emit('open-modal', !this.showModal)
       this.emitter.emit('delete-user', id)
+    },
+
+    sort(s) {
+      //if s == current sort, reverse
+      if (s === this.currentSort) {
+        this.currentSortDir = this.currentSortDir === 'asc' ? 'desc' : 'asc'
+      }
+      this.currentSort = s
     },
   },
 }
@@ -162,6 +215,11 @@ export default {
     .table th,
     .table td {
       padding: 2rem;
+    }
+
+    .triangle {
+      cursor: pointer;
+      margin: 0.5rem 1rem;
     }
 
     .table tbody tr td:first-child {

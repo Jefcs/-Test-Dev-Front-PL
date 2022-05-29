@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <img src="@/assets/loging.svg" alt="Man at the computer working" />
+    <img src="@/assets/loging.svg" alt="Homem trabalhando no computador" />
     <form @submit.prevent="sendForm">
       <fieldset class="form">
         <legend>Bem-vindo!</legend>
@@ -52,8 +52,8 @@ export default {
   data() {
     return {
       event: {
-        email: null,
-        password: null,
+        email: 'devfrontpl@diwe.com.br',
+        password: 'frontPl@2021',
         emailMessage: 'Preencha o campo Email',
         passwordMessage: 'Preencha o campo Senha',
       },

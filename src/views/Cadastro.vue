@@ -34,6 +34,7 @@
                 v-model="event.mobile"
                 label="Celular"
                 placeholder="Digite o celular"
+                maxlength="12"
                 type="text"
               />
             </div>
@@ -74,6 +75,14 @@ export default {
           mobile: this.event.mobile,
         })
         .then(() => this.$router.push({ name: 'listagem' }))
+    },
+  },
+
+  watch: {
+    'event.mobile'() {
+      this.event.mobile = this.event.mobile
+        .replace(/[^0-9]/g, '')
+        .replace(/^(\d{2})(\d{4})(\d{4})/g, '($1) $2-$3')
     },
   },
 }
