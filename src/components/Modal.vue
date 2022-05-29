@@ -78,7 +78,7 @@ export default {
       padding: 3rem;
       width: 50%;
       height: 27rem;
-      background-color: #fff;
+      background-color: var(--light-white);
       border-radius: 8px;
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
       transition: all 0.3s ease;
@@ -86,8 +86,8 @@ export default {
       .button__excluir {
         height: 5.6rem;
         font-family: var(--font-monteserrat);
-        color: #f1f1f1;
-        background-color: #fc3333;
+        color: var(--white-variant);
+        background-color: var(--tertiary-color);
         letter-spacing: -0.02em;
         font-size: 1.6rem;
         font-weight: 500;
@@ -101,13 +101,13 @@ export default {
       .button__nExcluir {
         height: 5.6rem;
         font-family: var(--font-monteserrat);
-        color: #424242;
-        background-color: #ffffff;
+        color: var(--dark-variant);
+        background-color: var(--light-white);
         letter-spacing: -0.02em;
         font-size: 1.6rem;
         font-weight: 500;
         border-radius: 8px;
-        border: solid 1px #424242;
+        border: solid 1px var(--dark-variant);
         cursor: pointer;
         place-self: center stretch;
         grid-column: 5 /7;
@@ -142,14 +142,7 @@ export default {
   }
 }
 
-/*
- * The following styles are auto-applied to elements with
- * transition="modal" when their visibility is toggled
- * by Vue.js.
- *
- * You can easily play with the modal transition by editing
- * these styles.
- */
+/* Router transition */
 
 .modal-enter {
   opacity: 0;

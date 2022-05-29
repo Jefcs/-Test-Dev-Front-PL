@@ -1,36 +1,15 @@
 <template>
   <div class="navbar">
-    <router-link @click="back" class="link" to="">
-      <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
-        <path
-          d="M31.6666 20H8.33331"
-          stroke="#495057"
-          stroke-width="2.5"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        />
-        <path
-          d="M20 31.6667L8.33331 20L20 8.33337"
-          stroke="#495057"
-          stroke-width="2.5"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        />
-      </svg>
+    <span @click="this.$router.go(-1)" class="link">
+      <img src="@/assets/arrow-left.svg" />
       <h3>Voltar</h3>
-    </router-link>
+    </span>
   </div>
 </template>
 
 <script>
 export default {
   name: 'Navbar',
-
-  methods: {
-    back() {
-      this.$router.go(-1)
-    },
-  },
 }
 </script>
 
@@ -43,11 +22,11 @@ export default {
 
   .link {
     height: 8.8rem;
-    text-decoration: none;
 
     display: flex;
     align-items: center;
     width: 12rem;
+    cursor: pointer;
   }
 
   h3 {

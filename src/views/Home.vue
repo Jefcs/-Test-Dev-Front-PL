@@ -46,14 +46,11 @@ export default {
   name: 'Home',
   components: { BaseInput, BaseButton },
 
-  // Credentials
-  // devfrontpl@diwe.com.br and frontPl@2021
-
   data() {
     return {
       event: {
-        email: 'devfrontpl@diwe.com.br',
-        password: 'frontPl@2021',
+        email: null,
+        password: null,
         emailMessage: 'Preencha o campo Email',
         passwordMessage: 'Preencha o campo Senha',
       },

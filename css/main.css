@@ -3,9 +3,12 @@
   --primary-color: #244677;
   --primary-color-light: #12295b;
   --secondary-color: #f1f3f5;
+  --tertiary-color: #fc3333;
   --light-dark: #495057;
   --dark-white: #f7f8fc;
   --light-white: #ffffff;
+  --dark-variant: #424242;
+  --white-variant: #f1f1f1;
 
   --font-monteserrat: Montserrat;
   --font-poppins: Poppins;
@@ -29,8 +32,6 @@ html {
 body {
   font-weight: 300;
 }
-
-/* Button */
 
 /* Accessibility tag */
 fieldset {
